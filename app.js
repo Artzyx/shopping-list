@@ -20,10 +20,13 @@ $(document).ready(function() {
   });
   // check item on click
 
-  $('.js-shopping-item-toggle').click(function(event) {
+  // $('.js-shopping-item-toggle').click(function(event) {
+  //   $(this).closest('li').children('.js-shopping-item').toggleClass('shopping-item__checked');
+  // });
+  
+  $(document).on('click', '.js-shopping-item-toggle', function() {
     $(this).closest('li').children('.js-shopping-item').toggleClass('shopping-item__checked');
   });
-  
   // delete item on click
   
   

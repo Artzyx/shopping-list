@@ -3,11 +3,7 @@
 var state = {
   items: []
 };
-// function that adds items to the state array
-//console.log(state);
 // enter items they need to purchase by entering text and hitting "Return" or clicking the "Add item" button
-
-
 // listen for form submission
 $(document).ready(function() {
   $('#js-shopping-list-form button').click(function(event) {
@@ -19,16 +15,13 @@ $(document).ready(function() {
     addItem(state, itemName);
   });
   // check item on click
-
-  // $('.js-shopping-item-toggle').click(function(event) {
-  //   $(this).closest('li').children('.js-shopping-item').toggleClass('shopping-item__checked');
-  // });
-  
   $(document).on('click', '.js-shopping-item-toggle', function() {
     $(this).closest('li').children('.js-shopping-item').toggleClass('shopping-item__checked');
   });
   // delete item on click
-  
+   $(document).on('click', '.js-shopping-item-delete', function() {
+    $(this).closest('li').remove();
+  });
   
 });
 
@@ -40,11 +33,6 @@ function addItem(state, itemName) {
   });
   $('.shopping-list').append(createItem(itemName));
 }
-// delete item
-function deleteItem(state, itemName) {
-   state.items.splice(itemName, 1);
-}
-
 // Create item inside of the 
 function createItem(itemName) {
   var item = (
@@ -62,7 +50,3 @@ function createItem(itemName) {
   );
   return item;
 }
-// check and uncheck items on the list by clicking the "Check" button
-//
-
-// permanently remove items from the list

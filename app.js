@@ -1,8 +1,10 @@
 /*global $*/
+
 // state object used instead of the DOM to store the application state
 var state = {
   items: []
 };
+
 // enter items they need to purchase by entering text and hitting "Return" or clicking the "Add item" button
 // listen for form submission
 $(document).ready(function() {
@@ -16,13 +18,12 @@ $(document).ready(function() {
   });
   // check item on click
   $(document).on('click', '.js-shopping-item-toggle', function() {
-    $(this).closest('li').children('.js-shopping-item').toggleClass('shopping-item__checked');
+    checkItem(state, this);
   });
   // delete item on click
-   $(document).on('click', '.js-shopping-item-delete', function() {
-    $(this).closest('li').remove();
+  $(document).on('click', '.js-shopping-item-delete', function() {
+    deleteItem(state, this);
   });
-  
 });
 
 // create item and add to list
@@ -33,9 +34,36 @@ function addItem(state, itemName) {
   });
   $('.shopping-list').append(createItem(itemName));
 }
-// Create item inside of the 
+
+
+// check item and update state
+function checkItem(state, element) {
+  $(element).closest('li').children('.js-shopping-item').toggleClass('shopping-item__checked');
+  // find the item name
+  var itemName = $(element).closest('li').children('.js-shopping-item').text();
+  var index = state.items.findIndex(function(element) {
+    return element.name === itemName;  
+  });
+  state.items[index].checked = !state.items[index].checked;
+  // toggle checked
+  
+}
+  
+
+// find the index of item
+// delete item from the state
+function deleteItem(state, element) {
+  var itemName = $(element).closest('li').children('.js-shopping-item').text();
+  $(element).closest('li').remove();
+  var index = state.items.findIndex(function(element) {
+    return element.name === itemName;
+  });
+  state.items.splice(index, 1);
+}
+
+// Create item inside of the UL
 function createItem(itemName) {
-  var item = (
+  return (
     '<li>' +
       '<span class="shopping-item js-shopping-item">' + itemName + '</span>' +
       '<div class="shopping-item-controls">' +
@@ -48,5 +76,4 @@ function createItem(itemName) {
       '</div>' +
     '</li>'
   );
-  return item;
 }
